@@ -1,0 +1,13 @@
+tunnel: 02d8a785-9183-487c-b0e9-d892668343e8
+credentials-file: /etc/cloudflared/02d8a785-9183-487c-b0e9-d892668343e8.json
+
+ingress:
+  - hostname: brain.adrienesquerre.com
+    service: ssh://localhost:22
+  - hostname: lab.adrienesquerre.com
+    service: http://localhost:80
+    originRequest:
+      noTLSVerify: true
+  - hostname: grafana.adrienesquerre.com
+    service: http://localhost:80
+  - service: http_status:404

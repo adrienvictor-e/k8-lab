@@ -1,0 +1,6 @@
+*.tfstate
+*.tfstate.backup
+.env
+*.key
+*.pem
+secrets/
