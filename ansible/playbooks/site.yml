@@ -1,0 +1,49 @@
+---
+- name: Common configuration for all Pis
+  hosts: all
+  become: true
+  tasks:
+    - name: Ensure essential packages are installed
+      apt:
+        name:
+          - git
+          - curl
+          - vim
+          - htop
+          - net-tools
+          - jq
+        state: present
+        update_cache: yes
+
+    - name: Ensure timezone is set
+      timezone:
+        name: Europe/Prague
+
+    - name: Ensure locale is generated
+      locale_gen:
+        name: en_US.UTF-8
+        state: present
+
+    - name: Disable SSH password authentication
+      lineinfile:
+        path: /etc/ssh/sshd_config.d/50-cloud-init.conf
+        regexp: '^PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+      notify: restart ssh
+
+  handlers:
+    - name: restart ssh
+      systemd:
+        name: ssh
+        state: restarted
+
+- name: Control plane specific config
+  hosts: control_plane
+  become: true
+  tasks:
+    - name: Ensure K3s kubeconfig is readable
+      lineinfile:
+        path: /etc/systemd/system/k3s.service.env
+        regexp: '^K3S_KUBECONFIG_MODE'
+        line: 'K3S_KUBECONFIG_MODE="644"'
+        create: yes
