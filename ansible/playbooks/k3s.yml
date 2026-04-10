@@ -1,0 +1,42 @@
+---
+- name: Install K3s control plane
+  hosts: control_plane
+  become: true
+  tasks:
+    - name: Check if K3s is already installed
+      stat:
+        path: /usr/local/bin/k3s
+      register: k3s_binary
+
+    - name: Download and install K3s server
+      shell: |
+        curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-ip {{ ansible_host }} --flannel-iface eth0 --write-kubeconfig-mode 644" sh -
+      when: not k3s_binary.stat.exists
+
+    - name: Wait for K3s to be ready
+      wait_for:
+        path: /etc/rancher/k3s/k3s.yaml
+        timeout: 60
+
+    - name: Get node token
+      slurp:
+        src: /var/lib/rancher/k3s/server/node-token
+      register: k3s_token
+
+    - name: Save token as fact
+      set_fact:
+        k3s_node_token: "{{ k3s_token.content | b64decode | trim }}"
+
+- name: Install K3s workers
+  hosts: workers
+  become: true
+  tasks:
+    - name: Check if K3s agent is already installed
+      stat:
+        path: /usr/local/bin/k3s
+      register: k3s_binary
+
+    - name: Install K3s agent
+      shell: |
+        curl -sfL https://get.k3s.io | K3S_URL=https://{{ hostvars['pi-brain']['ansible_host'] }}:6443 K3S_TOKEN={{ hostvars['pi-brain']['k3s_node_token'] }} INSTALL_K3S_EXEC="--node-ip {{ ansible_host }} --flannel-iface eth0" sh -
+      when: not k3s_binary.stat.exists
