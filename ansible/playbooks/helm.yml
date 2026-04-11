@@ -1,0 +1,48 @@
+---
+- name: Manage Helm releases
+  hosts: control_plane
+  become: true
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  vars:
+    values_dir: /home/adrien/homelab/k8s/monitoring/helm-values
+  tasks:
+    - name: Check if Helm is installed
+      stat:
+        path: /usr/local/bin/helm
+      register: helm_binary
+
+    - name: Install Helm
+      shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      when: not helm_binary.stat.exists
+
+    - name: Add Prometheus community Helm repo
+      shell: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+      register: repo_add
+      changed_when: "'has been added' in repo_add.stdout"
+      failed_when:
+        - repo_add.rc != 0
+        - "'already exists' not in repo_add.stderr"
+
+    - name: Update Helm repos
+      shell: helm repo update
+      changed_when: false
+
+    - name: Check if monitoring release exists
+      shell: helm list -n monitoring -q | grep -w monitoring
+      register: monitoring_release
+      changed_when: false
+      failed_when: false
+
+    - name: Install or upgrade kube-prometheus-stack
+      shell: |
+        helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
+          --namespace monitoring \
+          --create-namespace \
+          -f {{ values_dir }}/grafana-values.yaml
+      register: helm_result
+      changed_when: "'has been upgraded' in helm_result.stdout or 'has been installed' in helm_result.stdout"
+
+    - name: Show Helm result
+      debug:
+        var: helm_result.stdout_lines

@@ -1,0 +1,28 @@
+---
+- name: Apply Kubernetes manifests
+  hosts: control_plane
+  become: true
+  vars:
+    manifests_dir: /home/adrien/homelab/k8s
+  tasks:
+    - name: Apply base manifests
+      shell: kubectl apply -f {{ manifests_dir }}/base/
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+      register: apply_base
+      changed_when: "'configured' in apply_base.stdout or 'created' in apply_base.stdout"
+
+    - name: Show base apply output
+      debug:
+        var: apply_base.stdout_lines
+
+    - name: Apply monitoring manifests
+      shell: kubectl apply -f {{ manifests_dir }}/monitoring/
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+      register: apply_monitoring
+      changed_when: "'configured' in apply_monitoring.stdout or 'created' in apply_monitoring.stdout"
+
+    - name: Show monitoring apply output
+      debug:
+        var: apply_monitoring.stdout_lines
