@@ -1,0 +1,21 @@
+grafana:
+  grafana.ini:
+    security:
+      allow_embedding: true
+    auth.anonymous:
+      enabled: true
+      org_role: Viewer
+  resources:
+    requests:
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+prometheus:
+  prometheusSpec:
+    resources:
+      requests:
+        memory: 256Mi
+      limits:
+        memory: 512Mi
+    retention: 3d
