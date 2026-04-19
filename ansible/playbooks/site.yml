@@ -12,6 +12,7 @@
           - htop
           - net-tools
           - jq
+          - iptables
         state: present
         update_cache: yes
 
@@ -31,11 +32,41 @@
         line: 'PasswordAuthentication no'
       notify: restart ssh
 
+    - name: Check if cgroups are enabled
+      shell: grep -q 'cgroup_memory=1' /boot/firmware/cmdline.txt
+      register: cgroups_check
+      changed_when: false
+      failed_when: false
+
+    - name: Enable cgroups for K3s
+      lineinfile:
+        path: /boot/firmware/cmdline.txt
+        regexp: '^(.(?!cgroup_memory=1).*)$'
+        backrefs: yes
+        line: '\1 cgroup_memory=1 cgroup_enable=memory'
+      when: cgroups_check.rc != 0
+      notify: reboot pi
+
+    - name: Configure Ethernet static IP
+      community.general.nmcli:
+        conn_name: eth-cluster
+        ifname: eth0
+        type: ethernet
+        ip4: "{{ ethernet_ip }}/24"
+        method4: manual
+        autoconnect: yes
+        state: present
+      when: ethernet_ip is defined
+
   handlers:
     - name: restart ssh
       systemd:
         name: ssh
         state: restarted
+
+    - name: reboot pi
+      reboot:
+        reboot_timeout: 120
 
 - name: Control plane specific config
   hosts: control_plane
