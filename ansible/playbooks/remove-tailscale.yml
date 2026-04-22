@@ -1,0 +1,33 @@
+---
+- name: Remove Tailscale from cluster nodes
+  hosts: control_plane:workers
+  become: true
+  tasks:
+    - name: Stop Tailscale
+      systemd:
+        name: tailscaled
+        state: stopped
+        enabled: false
+      ignore_errors: true
+
+    - name: Remove Tailscale packages
+      apt:
+        name:
+          - tailscale
+          - tailscaled
+        state: absent
+        purge: true
+      ignore_errors: true
+
+    - name: Remove Tailscale config
+      file:
+        path: /var/lib/tailscale
+        state: absent
+
+    - name: Fix DNS to use Pi-hole
+      copy:
+        dest: /etc/resolv.conf
+        content: |
+          nameserver 10.0.0.4
+          nameserver 1.1.1.1
+        mode: '0644'
