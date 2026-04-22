@@ -1,0 +1,57 @@
+---
+- name: Install and configure Pi-hole
+  hosts: management
+  become: true
+  tasks:
+    - name: Check if Pi-hole is already installed
+      stat:
+        path: /usr/local/bin/pihole
+      register: pihole_binary
+
+    - name: Create Pi-hole config directory
+      file:
+        path: /etc/pihole
+        state: directory
+        mode: '0755'
+      when: not pihole_binary.stat.exists
+
+    - name: Create Pi-hole unattended config
+      copy:
+        dest: /etc/pihole/setupVars.conf
+        content: |
+          PIHOLE_INTERFACE=wlan0
+          PIHOLE_DNS_1=1.1.1.1
+          PIHOLE_DNS_2=8.8.8.8
+          QUERY_LOGGING=true
+          INSTALL_WEB_SERVER=true
+          INSTALL_WEB_INTERFACE=true
+          LIGHTTPD_ENABLED=true
+          CACHE_SIZE=10000
+          DNS_FQDN_REQUIRED=true
+          DNS_BOGUS_PRIV=true
+          BLOCKING_ENABLED=true
+          WEBPASSWORD=
+        mode: '0644'
+      when: not pihole_binary.stat.exists
+
+    - name: Download Pi-hole installer
+      get_url:
+        url: https://install.pi-hole.net
+        dest: /tmp/pihole-install.sh
+        mode: '0755'
+      when: not pihole_binary.stat.exists
+
+    - name: Install Pi-hole unattended
+      shell: /tmp/pihole-install.sh --unattended
+      when: not pihole_binary.stat.exists
+
+    - name: Set Pi-hole admin password
+      shell: pihole -a -p homelab2026
+      changed_when: true
+      when: not pihole_binary.stat.exists
+
+    - name: Ensure Pi-hole FTL is running
+      systemd:
+        name: pihole-FTL
+        state: started
+        enabled: true
