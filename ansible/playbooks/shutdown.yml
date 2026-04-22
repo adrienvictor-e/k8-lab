@@ -1,0 +1,14 @@
+---
+- name: Shutdown workers first
+  hosts: workers
+  become: true
+  tasks:
+    - name: Shutdown worker nodes
+      community.general.shutdown:
+
+- name: Shutdown control plane
+  hosts: control_plane
+  become: true
+  tasks:
+    - name: Shutdown control plane
+      community.general.shutdown:
