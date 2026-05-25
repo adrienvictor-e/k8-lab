@@ -1,0 +1,4 @@
+cd ~/homelab
+git add -A
+git commit -m "Add Loki values file"
+git push
