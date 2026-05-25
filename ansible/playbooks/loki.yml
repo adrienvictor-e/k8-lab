@@ -1,0 +1,36 @@
+---
+- name: Deploy Loki for centralized logging
+  hosts: control_plane
+  become: true
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  tasks:
+    - name: Add Grafana Helm repo
+      shell: helm repo add grafana https://grafana.github.io/helm-charts
+      register: repo_add
+      changed_when: "'has been added' in repo_add.stdout"
+      failed_when:
+        - repo_add.rc != 0
+        - "'already exists' not in repo_add.stderr"
+
+    - name: Update Helm repos
+      shell: helm repo update
+      changed_when: false
+
+    - name: Check if Loki release exists
+      shell: helm list -n monitoring -q | grep -w loki
+      register: loki_release
+      changed_when: false
+      failed_when: false
+
+    - name: Install or upgrade Loki
+      shell: |
+        helm upgrade --install loki grafana/loki \
+          --namespace monitoring \
+          -f /home/adrien/homelab/k8s/logging/loki-values.yaml
+      register: helm_result
+      changed_when: "'has been upgraded' in helm_result.stdout or 'has been installed' in helm_result.stdout"
+
+    - name: Show Loki install result
+      debug:
+        var: helm_result.stdout_lines
