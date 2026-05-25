@@ -10,6 +10,12 @@ grafana:
       memory: 128Mi
     limits:
       memory: 256Mi
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      url: http://loki.monitoring.svc.cluster.local:3100
+      access: proxy
+      isDefault: false
 
 prometheus:
   prometheusSpec:
