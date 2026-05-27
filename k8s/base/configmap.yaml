@@ -8,6 +8,7 @@ data:
     <html>
     <head>
       <title>Adrien's Homelab</title>
+      <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -59,6 +60,16 @@ data:
         .arch-item { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 10px; padding: 20px; }
         .arch-item h3 { font-size: 1em; color: #60a5fa; margin-bottom: 6px; }
         .arch-item p { font-size: 0.85em; color: #888; line-height: 1.5; }
+
+        .logs-section { max-width: 1240px; margin: 0 auto; padding: 0 20px 40px; }
+        .logs-section h2 { font-size: 1.4em; margin-bottom: 6px; color: #fff; }
+        .logs-section .subtitle { font-size: 0.85em; color: #555; margin-bottom: 20px; }
+        .logs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+        .logs-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 12px; padding: 22px; }
+        .logs-card h3 { font-size: 0.95em; color: #60a5fa; margin-bottom: 6px; }
+        .logs-card p { font-size: 0.82em; color: #666; line-height: 1.6; margin-bottom: 16px; }
+        .logs-btn { display: inline-block; font-size: 0.8em; color: #60a5fa; border: 1px solid #1e4070; background: #0c1628; border-radius: 6px; padding: 6px 14px; text-decoration: none; transition: all 0.18s; }
+        .logs-btn:hover { background: #122040; border-color: #60a5fa; }
 
         .footer { text-align: center; padding: 40px 20px; color: #444; font-size: 0.85em; border-top: 1px solid #1a1a1a; margin-top: 40px; }
         .footer a { color: #60a5fa; text-decoration: none; margin: 0 10px; }
@@ -196,7 +207,7 @@ data:
         <div class="arch-grid">
           <div class="arch-item">
             <h3>Hardware</h3>
-            <p>4x Raspberry Pi 5 on Ethernet backbone — 1 control plane, 2 workers, 1 DNS/Ansible node</p>
+            <p>4x Raspberry Pi 5 on Ethernet backbone &mdash; 1 control plane, 2 workers, 1 DNS/Ansible node</p>
           </div>
           <div class="arch-item">
             <h3>Orchestration</h3>
@@ -217,6 +228,33 @@ data:
           <div class="arch-item">
             <h3>Storage</h3>
             <p>Persistent Volumes via local-path-provisioner, ConfigMap-managed content</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="logs-section">
+        <h2>Cluster Logs</h2>
+        <p class="subtitle">Logs shipped via OpenTelemetry Collector DaemonSet &rarr; Loki. Explore in Grafana by namespace or service.</p>
+        <div class="logs-grid">
+          <div class="logs-card">
+            <h3>monitoring</h3>
+            <p>Grafana, Prometheus, Loki, Alertmanager, OTel Collector</p>
+            <a class="logs-btn" id="logs-monitoring" href="#" target="_blank">Explore in Grafana &nearr;</a>
+          </div>
+          <div class="logs-card">
+            <h3>default</h3>
+            <p>Application workloads &mdash; webserver, notes-app and other deployed services</p>
+            <a class="logs-btn" id="logs-default" href="#" target="_blank">Explore in Grafana &nearr;</a>
+          </div>
+          <div class="logs-card">
+            <h3>kube-system</h3>
+            <p>K3s core components &mdash; CoreDNS, Traefik, metrics-server</p>
+            <a class="logs-btn" id="logs-kubesystem" href="#" target="_blank">Explore in Grafana &nearr;</a>
+          </div>
+          <div class="logs-card">
+            <h3>All Logs</h3>
+            <p>Full log stream across all namespaces and services</p>
+            <a class="logs-btn" id="logs-all" href="#" target="_blank">Explore in Grafana &nearr;</a>
           </div>
         </div>
       </div>
@@ -247,7 +285,7 @@ data:
 
         function updateTimestamp() {
           document.getElementById('last-updated').textContent =
-            'Panels refresh every 30s · Page loaded: ' + new Date().toLocaleTimeString();
+            'Panels refresh every 30s &middot; Page loaded: ' + new Date().toLocaleTimeString();
         }
 
         setInterval(updateTimestamp, 30000);
@@ -268,7 +306,7 @@ data:
         function checkHealth() {
           nodes.forEach(function(node) {
             var query = encodeURIComponent('up{instance="' + node.instance + '"}');
-            fetch('https://grafana.adrienesquerre.com/api/datasources/proxy/uid/prometheus/api/v1/query?query=' + query)
+            fetch('/grafana-api/api/datasources/proxy/uid/prometheus/api/v1/query?query=' + query)
               .then(function(r) { return r.json(); })
               .then(function(data) {
                 var result = data && data.data && data.data.result;
@@ -281,6 +319,20 @@ data:
 
         checkHealth();
         setInterval(checkHealth, 30000);
+
+        // Build Grafana Explore URLs for Loki log links
+        function lokiUrl(expr) {
+          var state = JSON.stringify({
+            datasource: 'P8E80F9AEF21F6940',
+            queries: [{ expr: expr, refId: 'A' }],
+            range: { from: 'now-1h', to: 'now' }
+          });
+          return 'https://grafana.adrienesquerre.com/explore?orgId=1&left=' + encodeURIComponent(state);
+        }
+        document.getElementById('logs-monitoring').href  = lokiUrl('{k8s_namespace_name="monitoring"}');
+        document.getElementById('logs-default').href     = lokiUrl('{k8s_namespace_name="default"}');
+        document.getElementById('logs-kubesystem').href  = lokiUrl('{k8s_namespace_name="kube-system"}');
+        document.getElementById('logs-all').href         = lokiUrl('{k8s_namespace_name=~".+"}');
       </script>
 
     </body>
@@ -292,6 +344,11 @@ data:
         root /usr/share/nginx/html;
         index index.html;
         add_header Cache-Control "no-cache, no-store, must-revalidate";
+      }
+      location /grafana-api/ {
+        proxy_pass http://monitoring-grafana.monitoring.svc.cluster.local/;
+        proxy_set_header Host grafana.adrienesquerre.com;
+        proxy_set_header X-Real-IP $remote_addr;
       }
       location /health {
         return 200 'ok';
