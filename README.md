@@ -11,15 +11,6 @@ Raspberry Pi 5 Kubernetes cluster with a full observability stack.
 | pi-3 | 10.0.0.3 | K3s worker |
 | pi-control | 10.0.0.4 | Pi-hole DNS, Ansible control node |
 
-### Why pi-control is separate
-
-pi-control runs Pi-hole and Ansible outside the K3s cluster:
-
-- **Pi-hole needs to be stable and isolated** — if it ran inside K3s and the cluster had an issue, DNS would go down for the whole network. Keeping it outside means DNS survives cluster failures.
-- **Ansible control node should not manage itself** — it's cleaner to run Ansible from a machine that isn't being managed by it.
-- **Separation of concerns** — pi-control handles infrastructure (DNS, provisioning), the K3s cluster handles workloads.
-
-
 ## Network
 
 - Ethernet backbone (10.0.0.0/24) — cluster traffic via dedicated switch
@@ -37,6 +28,16 @@ pi-control runs Pi-hole and Ansible outside the K3s cluster:
 
 - https://lab.adrienesquerre.com — public homelab dashboard
 - https://grafana.adrienesquerre.com — Grafana
+
+## Architecture Decisions
+
+### Why pi-control is separate
+
+pi-control runs Pi-hole and Ansible outside the K3s cluster:
+
+- **Pi-hole needs to be stable and isolated** — if it ran inside K3s and the cluster had an issue, DNS would go down for the whole network. Keeping it outside means DNS survives cluster failures.
+- **Ansible control node should not manage itself** — it's cleaner to run Ansible from a machine that isn't being managed by it.
+- **Separation of concerns** — pi-control handles infrastructure (DNS, provisioning), the K3s cluster handles workloads.
 
 ## Docs
 
