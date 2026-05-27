@@ -1,6 +1,6 @@
 # Adrien's Homelab
 
-Raspberry Pi 5 Kubernetes cluster with a full observability stack.
+Four Raspberry Pi 5s running a K3s cluster at home, exposed publicly via Cloudflare Tunnel. Includes a full observability stack (Prometheus, Grafana, Loki), infrastructure-as-code via Ansible, and a public-facing dashboard at https://lab.adrienesquerre.com.
 
 ## Infrastructure
 
