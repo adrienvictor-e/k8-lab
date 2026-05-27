@@ -295,7 +295,7 @@ data:
 
         function updateTimestamp() {
           document.getElementById('last-updated').textContent =
-            'Panels refresh every 30s &middot; Page loaded: ' + new Date().toLocaleTimeString();
+            'Panels refresh every 30s - Page loaded: ' + new Date().toLocaleTimeString();
         }
 
         setInterval(updateTimestamp, 30000);
