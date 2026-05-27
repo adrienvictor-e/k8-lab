@@ -294,7 +294,6 @@ data:
       <div class="footer">
         <p>
           Built by Adrien Esquerre &nbsp;|&nbsp;
-          <a href="https://grafana.adrienesquerre.com" target="_blank">Full Grafana Dashboard</a>
           <a href="https://github.com/adrienvictor-e/k8-lab/tree/main/docs/postmortems" target="_blank">Incident Postmortems</a>
           <a href="https://github.com/adrienvictor-e/k8-lab" target="_blank">GitHub</a>
         </p>
