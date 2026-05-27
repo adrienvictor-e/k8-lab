@@ -55,6 +55,10 @@ Simple, no external storage required — volumes are just directories on the nod
 
 Flannel is the K3s default CNI and has the lowest overhead on ARM hardware. Calico and Cilium offer network policy and observability features not needed here. On Raspberry Pis, the simpler option wins.
 
+### Git operations only from pi-brain
+
+The repo is edited, committed, and pushed exclusively from pi-brain. pi-control clones the repo to run Ansible playbooks but never commits — it only pulls. This keeps a single source of truth for git history and avoids divergence between machines.
+
 ## Docs
 
 - [Knowledge Base](docs/kb.md) — simple but not always obvious things about the stack
