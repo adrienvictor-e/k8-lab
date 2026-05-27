@@ -10,6 +10,7 @@ data:
       <title>Adrien's Homelab</title>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⎈</text></svg>">
       <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; }
@@ -95,8 +96,11 @@ data:
           <span class="status-dot" id="dot-control"></span><span class="status-value">pi-control</span><br>
           <span class="status-label">DNS / Ansible</span>
         </div>
-        <div class="status-item"><span class="status-value">K3s v1.34.4</span><br><span class="status-label">Kubernetes</span></div>
-        <div class="status-item"><span class="status-value">Debian 13</span><br><span class="status-label">OS</span></div>
+        <div class="status-item"><span class="status-value" id="k3s-version">—</span><br><span class="status-label">K3s</span></div>
+        <div class="status-item">
+          <span class="status-dot" id="dot-grafana"></span><span class="status-value">Grafana</span><br>
+          <span class="status-label">Dashboards</span>
+        </div>
       </div>
 
       <div class="controls">
@@ -137,7 +141,7 @@ data:
         </div>
         <div class="section-label">Disk</div>
         <div class="grid">
-          <div class="card"><div class="card-title">Disk I/O</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.1:9100&refresh=30s&panelId=panel-8&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Disk Space Usage</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.1:9100&refresh=30s&panelId=panel-9&theme=dark"></iframe></div>
         </div>
       </div>
 
@@ -145,21 +149,21 @@ data:
       <div class="node-panel" id="panel-body">
         <div class="section-label">Memory</div>
         <div class="grid">
-          <div class="card"><div class="card-title">Memory Gauge</div><iframe class="gauge" src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-6&theme=dark"></iframe></div>
-          <div class="card"><div class="card-title">Memory Usage</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-5&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Memory Gauge</div><iframe class="gauge" data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-6&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Memory Usage</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-5&theme=dark"></iframe></div>
         </div>
         <div class="section-label">CPU</div>
         <div class="grid">
-          <div class="card"><div class="card-title">CPU Usage</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-2&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">CPU Usage</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-2&theme=dark"></iframe></div>
         </div>
         <div class="section-label">Network</div>
         <div class="grid">
-          <div class="card"><div class="card-title">Network Received</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-11&theme=dark"></iframe></div>
-          <div class="card"><div class="card-title">Network Transmitted</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-12&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Network Received</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-11&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Network Transmitted</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-12&theme=dark"></iframe></div>
         </div>
         <div class="section-label">Disk</div>
         <div class="grid">
-          <div class="card"><div class="card-title">Disk I/O</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-8&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Disk Space Usage</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-9&theme=dark"></iframe></div>
         </div>
       </div>
 
@@ -167,21 +171,21 @@ data:
       <div class="node-panel" id="panel-pi3">
         <div class="section-label">Memory</div>
         <div class="grid">
-          <div class="card"><div class="card-title">Memory Gauge</div><iframe class="gauge" src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-6&theme=dark"></iframe></div>
-          <div class="card"><div class="card-title">Memory Usage</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-5&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Memory Gauge</div><iframe class="gauge" data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-6&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Memory Usage</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-5&theme=dark"></iframe></div>
         </div>
         <div class="section-label">CPU</div>
         <div class="grid">
-          <div class="card"><div class="card-title">CPU Usage</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-2&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">CPU Usage</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-2&theme=dark"></iframe></div>
         </div>
         <div class="section-label">Network</div>
         <div class="grid">
-          <div class="card"><div class="card-title">Network Received</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-11&theme=dark"></iframe></div>
-          <div class="card"><div class="card-title">Network Transmitted</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-12&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Network Received</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-11&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Network Transmitted</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-12&theme=dark"></iframe></div>
         </div>
         <div class="section-label">Disk</div>
         <div class="grid">
-          <div class="card"><div class="card-title">Disk I/O</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-8&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Disk Space Usage</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-9&theme=dark"></iframe></div>
         </div>
       </div>
 
@@ -189,21 +193,21 @@ data:
       <div class="node-panel" id="panel-control">
         <div class="section-label">Memory</div>
         <div class="grid">
-          <div class="card"><div class="card-title">Memory Gauge</div><iframe class="gauge" src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-6&theme=dark"></iframe></div>
-          <div class="card"><div class="card-title">Memory Usage</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-5&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Memory Gauge</div><iframe class="gauge" data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-6&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Memory Usage</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-5&theme=dark"></iframe></div>
         </div>
         <div class="section-label">CPU</div>
         <div class="grid">
-          <div class="card"><div class="card-title">CPU Usage</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-2&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">CPU Usage</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-2&theme=dark"></iframe></div>
         </div>
         <div class="section-label">Network</div>
         <div class="grid">
-          <div class="card"><div class="card-title">Network Received</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-11&theme=dark"></iframe></div>
-          <div class="card"><div class="card-title">Network Transmitted</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-12&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Network Received</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-11&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Network Transmitted</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-12&theme=dark"></iframe></div>
         </div>
         <div class="section-label">Disk</div>
         <div class="grid">
-          <div class="card"><div class="card-title">Disk I/O</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-8&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Disk Space Usage</div><iframe data-src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-9&theme=dark"></iframe></div>
         </div>
       </div>
 
@@ -261,11 +265,18 @@ data:
           document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
           document.getElementById('panel-' + id).classList.add('active');
           btn.classList.add('active');
+          document.querySelectorAll('#panel-' + id + ' iframe[data-src]').forEach(function(f) {
+            f.src = f.dataset.src;
+            f.removeAttribute('data-src');
+          });
         }
 
         function updateTimeRange(from) {
-          document.querySelectorAll('iframe').forEach(function(f) {
+          document.querySelectorAll('iframe:not([data-src])').forEach(function(f) {
             f.src = f.src.replace(/from=now-[^&]+/, 'from=' + from);
+          });
+          document.querySelectorAll('iframe[data-src]').forEach(function(f) {
+            f.dataset.src = f.dataset.src.replace(/from=now-[^&]+/, 'from=' + from);
           });
           updateTimestamp();
         }
@@ -306,6 +317,25 @@ data:
 
         checkHealth();
         setInterval(checkHealth, 30000);
+
+        function checkGrafana() {
+          fetch('/grafana-api/api/health')
+            .then(function(r) { return r.json(); })
+            .then(function(data) { setDot('grafana', data.database === 'ok' ? 'up' : 'down'); })
+            .catch(function() { setDot('grafana', 'down'); });
+        }
+        checkGrafana();
+        setInterval(checkGrafana, 30000);
+
+        fetch('/grafana-api/api/datasources/proxy/uid/prometheus/api/v1/query?query=kubernetes_build_info')
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            var result = data && data.data && data.data.result;
+            if (result && result.length > 0) {
+              document.getElementById('k3s-version').textContent = result[0].metric.git_version || '—';
+            }
+          })
+          .catch(function() {});
 
         // Build Grafana Explore URLs for Loki log links
         function lokiUrl(expr) {
