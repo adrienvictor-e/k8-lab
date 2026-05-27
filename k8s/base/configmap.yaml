@@ -61,15 +61,10 @@ data:
         .arch-item h3 { font-size: 1em; color: #60a5fa; margin-bottom: 6px; }
         .arch-item p { font-size: 0.85em; color: #888; line-height: 1.5; }
 
-        .logs-section { max-width: 1240px; margin: 0 auto; padding: 0 20px 40px; }
-        .logs-section h2 { font-size: 1.4em; margin-bottom: 6px; color: #fff; }
-        .logs-section .subtitle { font-size: 0.85em; color: #555; margin-bottom: 20px; }
-        .logs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-        .logs-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 12px; padding: 22px; }
-        .logs-card h3 { font-size: 0.95em; color: #60a5fa; margin-bottom: 6px; }
-        .logs-card p { font-size: 0.82em; color: #666; line-height: 1.6; margin-bottom: 16px; }
-        .logs-btn { display: inline-block; font-size: 0.8em; color: #60a5fa; border: 1px solid #1e4070; background: #0c1628; border-radius: 6px; padding: 6px 14px; text-decoration: none; transition: all 0.18s; }
-        .logs-btn:hover { background: #122040; border-color: #60a5fa; }
+        .logs-section { max-width: 1240px; margin: 0 auto; padding: 0 20px 24px; }
+        .logs-section p { font-size: 0.78em; color: #444; }
+        .logs-btn { font-size: 0.78em; color: #555; text-decoration: none; }
+        .logs-btn:hover { color: #888; }
 
         .footer { text-align: center; padding: 40px 20px; color: #444; font-size: 0.85em; border-top: 1px solid #1a1a1a; margin-top: 40px; }
         .footer a { color: #60a5fa; text-decoration: none; margin: 0 10px; }
@@ -243,30 +238,12 @@ data:
       </div>
 
       <div class="logs-section">
-        <h2>Cluster Logs</h2>
-        <p class="subtitle">Logs shipped via OpenTelemetry Collector DaemonSet &rarr; Loki. Explore in Grafana by namespace or service.</p>
-        <div class="logs-grid">
-          <div class="logs-card">
-            <h3>monitoring</h3>
-            <p>Grafana, Prometheus, Loki, Alertmanager, OTel Collector</p>
-            <a class="logs-btn" id="logs-monitoring" href="#" target="_blank">Explore in Grafana &nearr;</a>
-          </div>
-          <div class="logs-card">
-            <h3>default</h3>
-            <p>Application workloads &mdash; webserver, notes-app and other deployed services</p>
-            <a class="logs-btn" id="logs-default" href="#" target="_blank">Explore in Grafana &nearr;</a>
-          </div>
-          <div class="logs-card">
-            <h3>kube-system</h3>
-            <p>K3s core components &mdash; CoreDNS, Traefik, metrics-server</p>
-            <a class="logs-btn" id="logs-kubesystem" href="#" target="_blank">Explore in Grafana &nearr;</a>
-          </div>
-          <div class="logs-card">
-            <h3>All Logs</h3>
-            <p>Full log stream across all namespaces and services</p>
-            <a class="logs-btn" id="logs-all" href="#" target="_blank">Explore in Grafana &nearr;</a>
-          </div>
-        </div>
+        <p>Loki logs (requires Grafana login) &mdash;
+          <a class="logs-btn" id="logs-monitoring" href="#" target="_blank">monitoring</a> &middot;
+          <a class="logs-btn" id="logs-default" href="#" target="_blank">default</a> &middot;
+          <a class="logs-btn" id="logs-kubesystem" href="#" target="_blank">kube-system</a> &middot;
+          <a class="logs-btn" id="logs-all" href="#" target="_blank">all</a>
+        </p>
       </div>
 
       <div class="footer">
