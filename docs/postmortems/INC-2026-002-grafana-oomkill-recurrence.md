@@ -28,6 +28,8 @@ Grafana became intermittently unavailable due to repeated OOMKills, causing all 
 
 ## Root Cause
 
+> See KB: [Kubernetes Resource Limits](../kb.md#kubernetes-resource-limits)
+
 The 512Mi memory limit set in INC-2026-001 was not sufficient for Grafana 13's actual steady-state footprint. At the time of that fix, usage stabilised at ~226Mi — well within the new limit. Over the following days, usage grew to ~619Mi, exceeding the cap and triggering OOMKills again.
 
 INC-2026-001 included a low-priority action item to raise the limit to 768Mi after a week of observation. That action item was never completed, and the threshold was crossed before it was revisited.

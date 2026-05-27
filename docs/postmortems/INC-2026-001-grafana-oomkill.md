@@ -29,6 +29,8 @@ Grafana entered a CrashLoopBackOff loop after being OOMKilled repeatedly. The co
 
 ## Root Cause
 
+> See KB: [Kubernetes Resource Limits](../kb.md#kubernetes-resource-limits)
+
 Grafana was upgraded from an earlier version to **Grafana 13.0.1** (`grafana/grafana:13.0.1-security-01`) as part of a `kube-prometheus-stack` Helm upgrade. Grafana 13 has a higher baseline memory footprint than the previous version. The existing resource limit of **256Mi** was no longer sufficient.
 
 The pod's steady-state memory usage stabilised at **~296Mi** — approximately 40Mi over the limit — causing the kernel to OOM-kill the `grafana` container (exit code 137) shortly after startup each time. The crash cycle had a period of ~2 minutes (startup → serve → kill → backoff → restart).
