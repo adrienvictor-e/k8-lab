@@ -39,6 +39,22 @@ pi-control runs Pi-hole and Ansible outside the K3s cluster:
 - **Ansible control node should not manage itself** — it's cleaner to run Ansible from a machine that isn't being managed by it.
 - **Separation of concerns** — pi-control handles infrastructure (DNS, provisioning), the K3s cluster handles workloads.
 
+### K3s over full Kubernetes
+
+K3s is a single binary, runs as one process, and is designed for ARM and edge devices. Full Kubernetes would require running etcd, kube-apiserver, kube-controller-manager, and kube-scheduler separately — too much overhead for Raspberry Pi hardware and unnecessary for a 3-node cluster.
+
+### Cloudflare Tunnel over VPN or port forwarding
+
+No inbound ports need to be open on the home router. TLS is handled by Cloudflare. No dynamic DNS needed. The trade-off is a dependency on Cloudflare's infrastructure for external access.
+
+### local-path-provisioner for storage
+
+Simple, no external storage required — volumes are just directories on the node's disk. The trade-off is that data is tied to whichever node the pod lands on; there is no replication. Acceptable for a homelab, not for anything requiring durability guarantees.
+
+### Flannel over Calico or Cilium
+
+Flannel is the K3s default CNI and has the lowest overhead on ARM hardware. Calico and Cilium offer network policy and observability features not needed here. On Raspberry Pis, the simpler option wins.
+
 ## Docs
 
 - [Knowledge Base](docs/kb.md) — simple but not always obvious things about the stack
