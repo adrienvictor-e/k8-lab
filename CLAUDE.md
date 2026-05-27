@@ -101,6 +101,9 @@ Whenever the homelab cluster changes in a meaningful way, update these two files
 6. `git commit -m "..."` then `git push origin main`
 7. GitHub Actions deploys automatically — live in ~2 minutes at https://adrienvictor-e.github.io
 
+## Git Practices
+- Never add `Co-Authored-By: Claude` or any Claude/Anthropic attribution to commit messages
+
 ## Working Practices
 - Always document incidents and fixes in ~/homelab/docs/postmortems/ as INC-YYYY-NNN-short-description.md
 - Always commit changes to git after making fixes

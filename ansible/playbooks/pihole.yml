@@ -46,7 +46,7 @@
       when: not pihole_binary.stat.exists
 
     - name: Set Pi-hole admin password
-      shell: pihole -a -p homelab2026
+      shell: pihole -a -p {{ pihole_admin_password }}
       changed_when: true
       when: not pihole_binary.stat.exists
 
