@@ -25,15 +25,50 @@
 - Loki for logs via Helm
 - OTel Collector DaemonSet shipping logs to Loki
 - Grafana accessible at https://grafana.adrienesquerre.com
+- Anonymous viewer access enabled (allows iframe embeds and unauthenticated API queries)
+
+### Grafana references
+| Thing | Value |
+|---|---|
+| Prometheus datasource UID | `prometheus` |
+| Loki datasource UID | `P8E80F9AEF21F6940` |
+| Node Exporter dashboard UID | `7d57716318ee0dddbac5a7f451fb7753` |
+
+### Node Exporter — special case for pi-control
+pi-control is not a K3s node so it has no DaemonSet pod. Node Exporter runs there as a **systemd service** installed via Ansible:
+- Playbook: `~/homelab/ansible/playbooks/node-exporter.yml`
+- Binary: `/usr/local/bin/node_exporter` (v1.11.1, arm64)
+- Service: `systemctl status node_exporter` on pi-control
+- Prometheus scrapes it via `additionalScrapeConfigs` static target in `grafana-values.yaml` (not service discovery)
+- If metrics stop: `ssh adrien@10.0.0.4 sudo systemctl restart node_exporter`
 
 ## Remote Access
 - Cloudflare Tunnel: brain.adrienesquerre.com (SSH), lab.adrienesquerre.com (web), grafana.adrienesquerre.com (Grafana)
 - Ansible runs from pi-control
 
+## Lab Website (lab.adrienesquerre.com)
+The public-facing homelab dashboard — nginx pod serving a static HTML page with embedded Grafana iframes.
+- **Source**: `~/homelab/k8s/base/configmap.yaml` (ConfigMap `webserver-config`, key `index.html`)
+- **Deploy**: manual — edit the configmap, then apply + rollout restart (no auto-deploy)
+- **Repo**: https://github.com/adrienvictor-e/k8-lab (same as homelab repo)
+
+### Update workflow
+1. Edit `~/homelab/k8s/base/configmap.yaml`
+2. `KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl apply -f ~/homelab/k8s/base/configmap.yaml`
+3. `KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl rollout restart deployment/webserver -n default`
+4. `git add k8s/base/configmap.yaml && git commit -m "..." && git push origin main`
+
+### Architecture notes
+- nginx.conf is also in the ConfigMap — `location /grafana-api/` proxies to `monitoring-grafana.monitoring.svc.cluster.local` to avoid CORS when the JS health check fetches Prometheus data
+- Status dots use `/grafana-api/api/datasources/proxy/uid/prometheus/...` (same-origin via nginx proxy)
+- Loki Explore links built in JS using datasource UID `P8E80F9AEF21F6940`
+- iframe panels use `d-solo` URLs with `var-instance=<IP>:9100` to filter by node
+
 ## Common Commands
 - kubectl get pods --all-namespaces
 - ansible-playbook -i ~/homelab/ansible/inventory/hosts.yml ~/homelab/ansible/playbooks/all.yml
 - helm list -n monitoring
+- helm upgrade monitoring kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts --namespace monitoring --values ~/homelab/k8s/monitoring/helm-values/grafana-values.yaml --reuse-values
 
 ## Portfolio Website (React)
 The public portfolio at https://adrienvictor-e.github.io showcases the homelab as a project.
