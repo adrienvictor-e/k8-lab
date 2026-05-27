@@ -24,6 +24,8 @@
 
 ## Root Cause
 
+> See KB: [relevant-section](../kb.md#section) _(remove if not applicable)_
+
 
 
 ---

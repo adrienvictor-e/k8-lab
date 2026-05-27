@@ -25,6 +25,11 @@ Raspberry Pi 5 Kubernetes cluster with observability stack.
 - https://lab.adrienesquerre.com — Homelab dashboard
 - https://grafana.adrienesquerre.com — Grafana
 
+## Docs
+
+- [Knowledge Base](docs/kb.md) — simple but not always obvious things about the stack
+- [Incident Postmortems](docs/postmortems/) — structured incident reports
+
 ## Repository Structure
 
 ```
@@ -33,9 +38,10 @@ homelab/
 ├── k8s/
 │   ├── base/         # Core app manifests
 │   ├── monitoring/   # Prometheus, Grafana
-│   └── logging/      # Loki, OTel (planned)
+│   └── logging/      # Loki, OTel
 ├── cloudflare/       # Tunnel configs
 ├── docs/
+│   ├── kb.md         # Knowledge base
 │   └── postmortems/  # Incident reports
 └── scripts/          # Utility scripts
 ```
