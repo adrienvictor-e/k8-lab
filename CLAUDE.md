@@ -34,3 +34,10 @@
 - kubectl get pods --all-namespaces
 - ansible-playbook -i ~/homelab/ansible/inventory/hosts.yml ~/homelab/ansible/playbooks/all.yml
 - helm list -n monitoring
+
+## Working Practices
+- Always document incidents and fixes in ~/homelab/docs/postmortems/ as INC-YYYY-NNN-short-description.md
+- Always commit changes to git after making fixes
+- Run kubectl commands with KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+- Test changes in --check mode before applying Ansible playbooks
+- Use vim for file editing
