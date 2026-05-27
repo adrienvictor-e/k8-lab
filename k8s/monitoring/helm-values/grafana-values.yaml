@@ -25,3 +25,9 @@ prometheus:
       limits:
         memory: 512Mi
     retention: 3d
+    additionalScrapeConfigs:
+      - job_name: 'node-exporter-pi-control'
+        static_configs:
+          - targets: ['10.0.0.4:9100']
+            labels:
+              nodename: 'pi-control'

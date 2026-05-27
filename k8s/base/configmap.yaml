@@ -192,13 +192,23 @@ data:
 
       <!-- pi-control -->
       <div class="node-panel" id="panel-control">
-        <div class="no-data">
-          <strong>Node Exporter not installed on pi-control</strong>
-          pi-control (10.0.0.4) runs Pi-hole DNS and Ansible — it is not a K3s worker node
-          and does not have a Prometheus Node Exporter pod scheduled on it.<br><br>
-          To enable metrics here, deploy Node Exporter on pi-control via Ansible and add
-          it as a static scrape target in the Prometheus config.<br><br>
-          <a href="https://github.com/adrienvictor-e/k8-lab" target="_blank">k8-lab repo</a>
+        <div class="section-label">Memory</div>
+        <div class="grid">
+          <div class="card"><div class="card-title">Memory Gauge</div><iframe class="gauge" src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-6&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Memory Usage</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-5&theme=dark"></iframe></div>
+        </div>
+        <div class="section-label">CPU</div>
+        <div class="grid">
+          <div class="card"><div class="card-title">CPU Usage</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-2&theme=dark"></iframe></div>
+        </div>
+        <div class="section-label">Network</div>
+        <div class="grid">
+          <div class="card"><div class="card-title">Network Received</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-11&theme=dark"></iframe></div>
+          <div class="card"><div class="card-title">Network Transmitted</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-12&theme=dark"></iframe></div>
+        </div>
+        <div class="section-label">Disk</div>
+        <div class="grid">
+          <div class="card"><div class="card-title">Disk I/O</div><iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-8&theme=dark"></iframe></div>
         </div>
       </div>
 
