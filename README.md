@@ -1,28 +1,32 @@
 # Adrien's Homelab
 
-Raspberry Pi 5 Kubernetes cluster with observability stack.
+Raspberry Pi 5 Kubernetes cluster with a full observability stack.
 
 ## Infrastructure
 
-- **pi-brain** (192.168.0.105 / 10.0.0.1) — K3s control plane
-- **pi-body** (192.168.0.106 / 10.0.0.2) — K3s worker
-- **pi-3** (planned) — K3s worker + Pi-hole
+| Node | IP | Role |
+|---|---|---|
+| pi-brain | 10.0.0.1 | K3s control plane, Cloudflare Tunnel |
+| pi-body | 10.0.0.2 | K3s worker |
+| pi-3 | 10.0.0.3 | K3s worker |
+| pi-control | 10.0.0.4 | Pi-hole DNS, Ansible control node |
 
 ## Network
 
-- WiFi (192.168.0.0/24) — Internet access via TP-Link router
-- Ethernet backbone (10.0.0.0/24) — Direct cluster traffic via dedicated switch
+- Ethernet backbone (10.0.0.0/24) — cluster traffic via dedicated switch
+- Cloudflare Tunnel — exposes endpoints publicly over HTTPS without open ports
 
 ## Stack
 
-- **K3s** v1.34.4 on Raspberry Pi OS Lite (Debian 13)
-- **Traefik** ingress controller
-- **Prometheus + Grafana** monitoring
-- **Cloudflare Tunnel** for remote access
+- **K3s** v1.34.4 — lightweight Kubernetes, Flannel CNI, Traefik ingress
+- **Prometheus + Grafana** — metrics and dashboards
+- **Loki + OTel Collector** — log aggregation via DaemonSet
+- **Pi-hole** — DNS on pi-control (systemd, not K3s)
+- **Ansible** — node provisioning from pi-control
 
 ## Endpoints
 
-- https://lab.adrienesquerre.com — Homelab dashboard
+- https://lab.adrienesquerre.com — public homelab dashboard
 - https://grafana.adrienesquerre.com — Grafana
 
 ## Docs
@@ -39,7 +43,7 @@ homelab/
 │   ├── base/         # Core app manifests
 │   ├── monitoring/   # Prometheus, Grafana
 │   └── logging/      # Loki, OTel
-├── cloudflare/       # Tunnel configs
+├── cloudflare/       # Tunnel config
 ├── docs/
 │   ├── kb.md         # Knowledge base
 │   └── postmortems/  # Incident reports
