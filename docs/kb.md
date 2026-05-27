@@ -16,6 +16,6 @@ resources:
     memory: 768Mi   # kernel OOMKills the container if it exceeds this
 ```
 
-Exceed the limit → `exit code 137` → container restarts.
+Exceed the limit → the kernel OOMKills the **container** (`exit code 137`) → Kubernetes restarts it. The pod stays; only the container inside it dies. The kernel operates at the cgroup level (per container) and has no concept of pods.
 
-`requests` affect scheduling only. `limits` are enforced at runtime by the kubelet. If a container is repeatedly OOMKilled, raise the `limits.memory`. If a node is too full to schedule a pod, raise or lower `requests.memory` depending on the situation.
+`requests` affect scheduling only. `limits` are enforced at runtime by the kubelet via cgroups. If a container is repeatedly OOMKilled, raise `limits.memory`. If a node is too full to schedule a pod, adjust `requests.memory`.
