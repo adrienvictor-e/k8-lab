@@ -97,6 +97,38 @@ data:
           <div class="card-title">Memory Usage - pi-control</div>
           <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-5&theme=dark"></iframe>
         </div>
+        <div class="card">
+          <div class="card-title">Network Received - pi-brain</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.1:9100&refresh=30s&panelId=panel-11&theme=dark"></iframe>
+        </div>
+        <div class="card">
+          <div class="card-title">Network Received - pi-body</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-11&theme=dark"></iframe>
+        </div>
+        <div class="card">
+          <div class="card-title">Network Received - pi-3</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-11&theme=dark"></iframe>
+        </div>
+        <div class="card">
+          <div class="card-title">Network Received - pi-control</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-11&theme=dark"></iframe>
+        </div>
+        <div class="card">
+          <div class="card-title">Network Transmitted - pi-brain</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.1:9100&refresh=30s&panelId=panel-12&theme=dark"></iframe>
+        </div>
+        <div class="card">
+          <div class="card-title">Network Transmitted - pi-body</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-12&theme=dark"></iframe>
+        </div>
+        <div class="card">
+          <div class="card-title">Network Transmitted - pi-3</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-12&theme=dark"></iframe>
+        </div>
+        <div class="card">
+          <div class="card-title">Network Transmitted - pi-control</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-12&theme=dark"></iframe>
+        </div>
       </div>
       <div class="arch">
         <h2>Architecture</h2>
