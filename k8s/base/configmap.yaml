@@ -38,11 +38,13 @@ data:
     <body>
       <div class="header">
         <h1>Adrien's Kubernetes Homelab</h1>
-        <p>Two Raspberry Pi 5s running K3s, monitored by Prometheus + Grafana, accessible worldwide via Cloudflare Tunnel</p>
+        <p>Four Raspberry Pi 5s running K3s, monitored by Prometheus + Grafana, accessible worldwide via Cloudflare Tunnel</p>
       </div>
       <div class="status-bar">
         <div class="status-item"><span class="status-dot"></span><span class="status-value">pi-brain</span><br><span class="status-label">Control Plane</span></div>
         <div class="status-item"><span class="status-dot"></span><span class="status-value">pi-body</span><br><span class="status-label">Worker Node</span></div>
+        <div class="status-item"><span class="status-dot"></span><span class="status-value">pi-3</span><br><span class="status-label">Worker Node</span></div>
+        <div class="status-item"><span class="status-dot"></span><span class="status-value">pi-control</span><br><span class="status-label">DNS / Ansible</span></div>
         <div class="status-item"><span class="status-value">K3s v1.34.4</span><br><span class="status-label">Kubernetes</span></div>
         <div class="status-item"><span class="status-value">Debian 13</span><br><span class="status-label">OS</span></div>
       </div>
@@ -56,12 +58,28 @@ data:
           <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-6&theme=dark"></iframe>
         </div>
         <div class="card">
+          <div class="card-title">Memory Gauge - pi-3</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-6&theme=dark"></iframe>
+        </div>
+        <div class="card">
+          <div class="card-title">Memory Gauge - pi-control</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-6&theme=dark"></iframe>
+        </div>
+        <div class="card">
           <div class="card-title">CPU Usage - pi-brain</div>
           <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.1:9100&refresh=30s&panelId=panel-2&theme=dark"></iframe>
         </div>
         <div class="card">
           <div class="card-title">CPU Usage - pi-body</div>
           <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-2&theme=dark"></iframe>
+        </div>
+        <div class="card">
+          <div class="card-title">CPU Usage - pi-3</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-2&theme=dark"></iframe>
+        </div>
+        <div class="card">
+          <div class="card-title">CPU Usage - pi-control</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-2&theme=dark"></iframe>
         </div>
         <div class="card">
           <div class="card-title">Memory Usage - pi-brain</div>
@@ -71,13 +89,21 @@ data:
           <div class="card-title">Memory Usage - pi-body</div>
           <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.2:9100&refresh=30s&panelId=panel-5&theme=dark"></iframe>
         </div>
+        <div class="card">
+          <div class="card-title">Memory Usage - pi-3</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.3:9100&refresh=30s&panelId=panel-5&theme=dark"></iframe>
+        </div>
+        <div class="card">
+          <div class="card-title">Memory Usage - pi-control</div>
+          <iframe src="https://grafana.adrienesquerre.com/d-solo/7d57716318ee0dddbac5a7f451fb7753/node-exporter-nodes?orgId=1&from=now-1h&to=now&timezone=utc&var-datasource=prometheus&var-instance=10.0.0.4:9100&refresh=30s&panelId=panel-5&theme=dark"></iframe>
+        </div>
       </div>
       <div class="arch">
         <h2>Architecture</h2>
         <div class="arch-grid">
           <div class="arch-item">
             <h3>Hardware</h3>
-            <p>2x Raspberry Pi 5 (8GB RAM), cluster rack with active cooling, direct Ethernet link between nodes</p>
+            <p>4x Raspberry Pi 5 on Ethernet backbone — 1 control plane, 2 workers, 1 DNS/Ansible node</p>
           </div>
           <div class="arch-item">
             <h3>Orchestration</h3>
