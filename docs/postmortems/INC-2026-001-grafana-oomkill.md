@@ -3,7 +3,8 @@
 **Date:** 2026-05-27  
 **Duration:** ~2 days (detected 2026-05-27, started ~2026-05-25 after monitoring stack upgrade)  
 **Severity:** High — Grafana completely unavailable, all dashboard iframes on lab.adrienesquerre.com broken  
-**Status:** Resolved  
+**Status:** Resolved
+**Visibility:** Public — no sensitive details exposed (internal IPs are RFC1918, no credentials or firewall specifics)
 
 ---
 
